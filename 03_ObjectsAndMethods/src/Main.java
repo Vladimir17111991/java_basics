@@ -10,6 +10,12 @@ public class Main {
         System.out.println("=========================================================");
         Arithmetic arithmetic = new Arithmetic(5,10);
         System.out.println(arithmetic.multiplyOfNumbers());
+        System.out.println("=========================================================");
+        Printer printer = new Printer();
+        printer.append("Стройка века","Акт №17",157);
+        printer.append("Разрушение века","Акт №20",48);
+        printer.print("Documents");
+        System.out.println("Общее число распечатанных страниц: " + printer.getTotalCountPages());
 
     }
 }
