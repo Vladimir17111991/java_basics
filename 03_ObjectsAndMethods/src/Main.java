@@ -7,5 +7,9 @@ public class Main {
         basket.print("Milk");
         System.out.println("Общий стоимость продуктов в корзине: " + basket.getTotalPrice() + " рублей");
         System.out.println("Общий вес продуктов в корзине: " + basket.getTotalWeight() + " грамм(-ов)");
+        System.out.println("=========================================================");
+        Arithmetic arithmetic = new Arithmetic(5,10);
+        System.out.println(arithmetic.multiplyOfNumbers());
+
     }
 }
