@@ -4,7 +4,16 @@ public class Shoes {
     private int size;
     private String material;
     private String nameModel;
-    private boolean typeShoes; // м или ж
+    private TypeShoes type; // м или ж
+
+
+    public TypeShoes getType() {
+        return type;
+    }
+
+    public void setType(TypeShoes type) {
+        this.type = type;
+    }
 
 
     public Shoes(int size, String nameModel) {
@@ -36,11 +45,4 @@ public class Shoes {
         this.nameModel = nameModel;
     }
 
-    public boolean getTypeShoes() {
-        return typeShoes;
-    }
-
-    public void setTypeShoes(boolean typeShoes) {
-        this.typeShoes = typeShoes;
-    }
 }
