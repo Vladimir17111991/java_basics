@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    public final static int MAX_BOXES_IN_CONTAINER = 27;
-    public final static int MAX_CONTAINER_IN_TRUCK = 12;
+    private final static int MAX_BOXES_IN_CONTAINER = 27;
+    private final static int MAX_CONTAINER_IN_TRUCK = 12;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
