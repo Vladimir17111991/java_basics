@@ -6,6 +6,7 @@ public class Main {
       Scanner scanner = new Scanner(System.in);
       String letter = scanner.nextLine();
     System.out.println(splitTextIntoWords(letter));
+
   }
 
   public static String splitTextIntoWords(String text) {
@@ -13,7 +14,7 @@ public class Main {
       String regex2 = "[,-;.0-9]";
       String modifyText =  text.replaceAll(regex2," ");
       String rezult = "";
-      String[] massivStr = modifyText.split(regex);
+      String[] massStr = modifyText.split(regex);
       for(int i = 0; i < massivStr.length; i++)
       {
           if(i==massivStr.length-1) {
