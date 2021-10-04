@@ -7,7 +7,7 @@ public class Main {
       String letter = scanner.nextLine();
     System.out.println(splitTextIntoWords(letter));
   }
-    //TODO реализуйте метод
+
   public static String splitTextIntoWords(String text) {
       String regex = "\\s+";
       String regex2 = "[,-;.0-9]";
@@ -24,5 +24,6 @@ public class Main {
           }
       }
       return rezult;
+    //TODO реализуйте метод
   }
 }
