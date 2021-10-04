@@ -17,7 +17,10 @@ public class Main {
     }
   }
   public static String fio(String input) {
-    String surname = "", text = "", name = "", patronymic = "";
+    String surname = "",
+            text = "",
+            name = "",
+            patronymic = "";
     int count =0;
     String regex = "[а-яА-Я]+[-[а-яА-Я]?]+";
     Pattern pattern = Pattern.compile(regex);
