@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class PhoneBook {
     Set<String> treeSet = new TreeSet<>();
     Map<String, String> map = new HashMap<>();
+
     //проверка на корректность ввода имени абонента
     public boolean checkName(String name) {
         boolean check = false;
@@ -40,32 +41,20 @@ public class PhoneBook {
     public void addContact(String phone, String name) {
         // проверьте корректность формата имени и телефона (отдельные методы для проверки)
         // если такой номер уже есть в списке, то перезаписать имя абонента
-        if (checkPhone(phone) && checkName(name)) {//если пройдена проверка на имя и телефон(для тестов)
+        if (checkPhone(phone) && checkName(name)) {
             if (map.containsValue(phone)) {
                 for (String oldName : map.keySet()) {
                     if (map.get(oldName).equals(phone)) {
-                        map.replace(map.remove(oldName), name);
+                        map.remove(oldName);
                         map.put(name, phone);
-                        break;
                     }
                 }
-            } else if (map.containsKey(name)) {
-                map.put(name, (map.get(name) + ", " + phone));//(для тестов)
-            } else {
-                map.put(name, phone);
             }
-        } else if (checkName(name) && !checkPhone(phone)) {//если пройдена проверка на имя(с консоли посылаем имя)
-            if (map.containsKey(name)) {//если ключ совпадает, то добавляем ему номер
-                map.remove(name);
-                map.put(name, (map.get(phone) + ", " + phone));
-            } else if (!map.containsKey(name)) {//иначе делаем проверку,если такой номер существует, то меняем имя абонента
-                for (String oldName : map.keySet()) {
-                    if (map.get(oldName).equals(name)) {
-                        map.replace(map.remove(oldName), name);
-                        map.put(name, phone);
-                        break;
-                    }
-                }
+            if (map.containsKey(name)&&!map.containsValue(phone)) {
+                map.put(name, (map.get(name) + ", " + phone));
+            }
+            else {
+                map.put(name, phone);
             }
         }
     }
@@ -108,8 +97,8 @@ public class PhoneBook {
         // если контактов нет в телефонной книге - вернуть пустой TreeSet
     }
 }
-    // для обхода Map используйте получение пары ключ->значение Map.Entry<String,String>
-    // это поможет вам найти все ключи (key) по значению (value)
+// для обхода Map используйте получение пары ключ->значение Map.Entry<String,String>
+// это поможет вам найти все ключи (key) по значению (value)
     /*
         for (Map.Entry<String, String> entry : map.entrySet()){
             String key = entry.getKey(); // получения ключа
