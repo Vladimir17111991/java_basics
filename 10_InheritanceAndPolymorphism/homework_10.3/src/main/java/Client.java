@@ -1,16 +1,26 @@
 public abstract class Client {
-
+private double currentSumma;
     public double getAmount() {
-        //TODO: реализуйте метод и удалите todo
-        return 0;
+        return currentSumma;
     }
 
     public void put(double amountToPut) {
-        //TODO: реализуйте метод и удалите todo
+        if(amountToPut>0)
+        {
+            currentSumma += amountToPut;
+        }
+        else
+            System.out.println("Введено отрицательное значение");
+
     }
 
     public void take(double amountToTake) {
-        //TODO: реализуйте метод и удалите todo
+    if (amountToTake>currentSumma)
+    {
+        System.out.println("Введеное число превышает сумму на счете");
     }
-
+    else
+        currentSumma -=amountToTake;
+    }
+    public abstract void info();
 }
