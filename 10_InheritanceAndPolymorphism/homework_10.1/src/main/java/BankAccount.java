@@ -56,7 +56,7 @@ public class BankAccount {
         if (isPut) {
             return true;
         }
-        boolean isTake = receiver.take(commission);
+        boolean isTake = this.take(commission);
         if (isTake) {
             return true;
         }
