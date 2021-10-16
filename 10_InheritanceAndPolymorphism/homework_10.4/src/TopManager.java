@@ -1,8 +1,17 @@
-import java.util.Random;
-
 public class TopManager implements Employee{
     private int income;
-    private int fixedSalary;
+
+    private final int  fixedSalary =(int)Math.round(Math.random()*25_000 + 40_000);
+    public int getFixedSalary() {
+        return fixedSalary;
+    }
+    private final int salary = (int)(getFixedSalary() + (getFixedSalary() * 1.5));
+
+    public int getSalary() {
+        return salary;
+    }
+
+
 public TopManager(int income)
 {
     this.income =income;
@@ -17,10 +26,9 @@ public TopManager(int income)
     }
     @Override
     public int getMonthSalary() {
-        fixedSalary = (int)Math.round(Math.random()*25_000 + 40_000);
         if(income>=10_000_000) {
-            return (int)(fixedSalary + (fixedSalary * 1.5));
+            return getSalary();
         }
-        else return fixedSalary;
+        else return getFixedSalary();
     }
 }

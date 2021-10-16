@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Company  {
+public class Company {
     private String nameCompany;
     private final int count;
     private int income;
     ArrayList<Employee> list = new ArrayList<>();
-   // ArrayList<Integer> listCopy = new ArrayList<>();
+    ArrayList<Employee> list2 = new ArrayList<>();
 
     public Company(String nameCompany, int income, int count) {
         this.nameCompany = nameCompany;
@@ -31,40 +31,50 @@ public class Company  {
         }
     }
 
-    public void fire(Employee employee) {
-        list.remove((int) (Math.round(Math.random() * count)));
+    public void fire(int count) {
+        int i = 0;
+        double percent = (double) count / 100;
+        int count2 = (int) (getCount() - getCount() * percent);
+        while (i < count2) {
+            list.remove((int) Math.ceil(Math.random() * (list.size() - 1)));
+            i++;
+        }
     }
 
     public int getIncome() {
         return income;
     }
 
-
     public List<Employee> getTopSalaryStaff(int count) {
         if (count >= 0 && count <= getCount()) {
-                list.sort(new EmployeeComparator());
+            list2.clear();
+            list.sort(new EmployeeComparator());
+            for (int i = 0; i < count; i++) {
+                list2.add(list.get(i));
             }
-        return list;
+        }
+        return list2;
     }
 
     public List<Employee> getLowestSalaryStaff(int count) {
-        return null;
+        if (count >= 0 && count <= getCount()) {
+            list2.clear();
+            list.sort(new EmployeeComparator().reversed());
+            for (int i = 0; i < count; i++) {
+                list2.add(list.get(i));
+            }
+        }
+        return list2;
     }
-
-
     public int getCount() {
         return count;
     }
-
-
     public void setIncome(int income) {
         this.income = income;
     }
-
     public String getNameCompany() {
         return nameCompany;
     }
-
     public void setNameCompany(String nameCompany) {
         this.nameCompany = nameCompany;
     }
