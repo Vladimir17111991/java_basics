@@ -31,18 +31,16 @@ public class Main {
     public static void listForTopSalary(Company company) {
         int countForTopSalary = (int) (Math.ceil((Math.random() * 5) + 10));
         System.out.println("Список из " + countForTopSalary + " зарплат по убыванию");
-        List<Employee> arrayList = company.getTopSalaryStaff(countForTopSalary);
-        for (Employee e : arrayList) {
-            System.out.println(e.getMonthSalary());
+        for (Employee indexEmployee : company.getTopSalaryStaff(countForTopSalary)) {
+            System.out.println(indexEmployee.getMonthSalary());
         }
     }
 
     public static void listForLowSalary(Company company) {
         int countForLowSalary = 30;
         System.out.println("Список из " + countForLowSalary + " зарплат по возрастанию");
-        List<Employee> arrayList2 = company.getLowestSalaryStaff(countForLowSalary);
-        for (Employee e : arrayList2) {
-            System.out.println(e.getMonthSalary());
+        for (Employee indexEmployee : company.getLowestSalaryStaff(countForLowSalary)) {
+            System.out.println(indexEmployee.getMonthSalary());
         }
     }
 

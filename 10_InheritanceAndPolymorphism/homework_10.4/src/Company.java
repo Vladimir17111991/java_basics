@@ -4,8 +4,8 @@ public class Company {
     private String nameCompany;
     private final int count;
     private int income;
-    ArrayList<Employee> list = new ArrayList<>();
-    ArrayList<Employee> list2 = new ArrayList<>();
+    List<Employee> generalListEmployees = new ArrayList<>();
+    List<Employee> employeeListAfterSorting = new ArrayList<>();
 
     public Company(String nameCompany, int income, int count) {
         this.nameCompany = nameCompany;
@@ -14,9 +14,7 @@ public class Company {
     }
 
     public void hire(Employee employee) {
-        list.add(employee);
-
-
+        generalListEmployees.add(employee);
     }
 
     public void hireAll(int countOperator, int countManager, int countTopManager) {
@@ -36,7 +34,7 @@ public class Company {
         double percent = (double) count / 100;
         int count2 = (int) (getCount() - getCount() * percent);
         while (i < count2) {
-            list.remove((int) Math.ceil(Math.random() * (list.size() - 1)));
+            generalListEmployees.remove((int) Math.ceil(Math.random() * (generalListEmployees.size() - 1)));
             i++;
         }
     }
@@ -47,24 +45,24 @@ public class Company {
 
     public List<Employee> getTopSalaryStaff(int count) {
         if (count >= 0 && count <= getCount()) {
-            list2.clear();
-            list.sort(new EmployeeComparator());
+            employeeListAfterSorting.clear();
+            generalListEmployees.sort(new EmployeeComparator());
             for (int i = 0; i < count; i++) {
-                list2.add(list.get(i));
+                employeeListAfterSorting.add(generalListEmployees.get(i));
             }
         }
-        return list2;
+        return employeeListAfterSorting;
     }
 
     public List<Employee> getLowestSalaryStaff(int count) {
         if (count >= 0 && count <= getCount()) {
-            list2.clear();
-            list.sort(new EmployeeComparator().reversed());
+            employeeListAfterSorting.clear();
+            generalListEmployees.sort(new EmployeeComparator().reversed());
             for (int i = 0; i < count; i++) {
-                list2.add(list.get(i));
+                employeeListAfterSorting.add(generalListEmployees.get(i));
             }
         }
-        return list2;
+        return employeeListAfterSorting;
     }
     public int getCount() {
         return count;
