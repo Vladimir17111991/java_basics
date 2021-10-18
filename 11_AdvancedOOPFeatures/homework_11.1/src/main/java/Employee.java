@@ -18,6 +18,7 @@ public class Employee {
     this.workStart = workStart;
   }
 
+
   public static List<Employee> loadStaffFromFile(String path) {
     List<Employee> staff = new ArrayList<>();
     try {
