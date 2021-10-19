@@ -1,8 +1,13 @@
-import java.util.List;
+import net.sf.saxon.functions.ConstantFunction;
+
+import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
-    private static final String STAFF_TXT = "data/staff.txt";
+    private static final String STAFF_TXT = "staff.txt";
 
     public static void main(String[] args) {
         List<Employee> staff = Employee.loadStaffFromFile(STAFF_TXT);
@@ -11,8 +16,11 @@ public class Main {
     }
 
     public static Employee findEmployeeWithHighestSalary(List<Employee> staff, int year) {
-        //TODO Метод должен вернуть сотрудника с максимальной зарплатой среди тех,
-        // кто пришёл в году, указанном в переменной year
-        return null;
+//Calendar calendar = Calendar.getInstance();
+        return staff.stream().filter(employeeYearWork -> employeeYearWork.getWorkStart().getYear() + 1900 >= year)
+                .collect(Collectors.toList()).stream().max(Comparator.comparing(Employee::getSalary)).get();
+
+
     }
+
 }
