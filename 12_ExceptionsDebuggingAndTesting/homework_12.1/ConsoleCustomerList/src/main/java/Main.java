@@ -12,7 +12,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         CustomerStorage executor = new CustomerStorage();
-
         while (true) {
             try {
                 String command = scanner.nextLine();

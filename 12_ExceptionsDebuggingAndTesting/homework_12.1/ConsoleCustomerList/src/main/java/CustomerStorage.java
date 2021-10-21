@@ -22,10 +22,10 @@ public class CustomerStorage {
         if (components.length != 4) {
             throw new IllegalArgumentException("Correct format: name surname email phone");
         }
-        if (checkingArrayElements(components, 3, regexForPhone)) {
+        if (checkingArrayElements(components, INDEX_PHONE, regexForPhone)) {
             throw new NumberFormatException("Example correct format phone: +79123456789");
         }
-        if (checkingArrayElements(components, 2, regexForMail)) {
+        if (checkingArrayElements(components, INDEX_EMAIL, regexForMail)) {
             throw new IllegalArgumentException("Example correct format e-mail: examples@gmail.com");
         }
 
