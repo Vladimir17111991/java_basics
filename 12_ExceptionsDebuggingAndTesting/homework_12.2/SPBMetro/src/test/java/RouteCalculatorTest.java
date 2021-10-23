@@ -1,20 +1,15 @@
 import core.Line;
 import core.Station;
 import junit.framework.TestCase;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class RouteCalculatorTest extends TestCase {
-    List<Station> route;
-    Station station;
-    static StationIndex stationIndex;
-    RouteCalculator routeCalculator;
-    Line line1, line2, line3;
+    private List<Station> route;
+    private static StationIndex stationIndex;
+    private RouteCalculator routeCalculator;
+    private Line line1, line2, line3;
 
     @Override
     public void setUp() {
@@ -63,12 +58,11 @@ public class RouteCalculatorTest extends TestCase {
 
     @DisplayName("Тест на проверку с одной пересадкой")
     public void testGetRouteWithOneConnection() {
-        List<Station> pers = new ArrayList<>();
-        pers.add(route.get(2));
+        List<Station> connections = new ArrayList<>();
+        connections.add(route.get(2));
+        connections.add(route.get(5));
+        connections.add(route.get(6));
 
-
-        pers.add(route.get(5));
-        pers.add(route.get(6));
         stationIndex.addStation(route.get(2));
         stationIndex.addStation(route.get(3));
         stationIndex.addStation(route.get(4));
@@ -81,33 +75,40 @@ public class RouteCalculatorTest extends TestCase {
         line2.addStation(route.get(4));
         line2.addStation(route.get(5));
         line3.addStation(route.get(6));
-        stationIndex.addConnection(pers);
+        stationIndex.addConnection(connections);
         List<Station> actual = routeCalculator.getShortestRoute(stationFrom, stationTo);
-        List<Station> expected = List.of(route.get(2), route.get(3), route.get(4), route.get(5), route.get(6));
+        Collections.sort(actual);
+        List<Station> expected = new ArrayList<>(List.of(route.get(2), route.get(3), route.get(4), route.get(5), route.get(6)));
+        Collections.sort(expected);
         assertEquals(expected, actual);
     }
 
-//    public void testGetRouteWithTwoConnection() {
-//
-//        stationIndex.addStation(route.get(1));
-//        stationIndex.addStation(route.get(2));
-//        stationIndex.addStation(route.get(3));
-//        stationIndex.addStation(route.get(4));
-//        stationIndex.addStation(route.get(5));
-//        stationIndex.addStation(route.get(6));
-//
-//        line1.addStation(route.get(1));
-//        line2.addStation(route.get(2));
-//        line2.addStation(route.get(3));
-//        line2.addStation(route.get(4));
-//        line2.addStation(route.get(5));
-//        line3.addStation(route.get(6));
-//        stationIndex.addConnection(route);
-//        Station stationFrom = stationIndex.getStation(route.get(1).getName());
-//        Station stationTo = stationIndex.getStation(route.get(3).getName());
-//          List<Station> actual = routeCalculator.getShortestRoute(stationFrom, stationTo);
-//         stationIndex.addConnection(route);
-//        List<Station> expected = List.of(route.get(1), route.get(2), route.get(3), route.get(4), route.get(5), route.get(6));
-//        assertEquals(expected, actual);
-//    }
+    public void testGetRouteWithTwoConnection() {
+        List<Station> connections = new ArrayList<>();
+        connections.add(route.get(1));
+        connections.add(route.get(2));
+        connections.add(route.get(5));
+        connections.add(route.get(6));
+        stationIndex.addConnection(connections);
+
+        stationIndex.addStation(route.get(1));
+        stationIndex.addStation(route.get(2));
+        stationIndex.addStation(route.get(3));
+        stationIndex.addStation(route.get(4));
+        stationIndex.addStation(route.get(5));
+        stationIndex.addStation(route.get(6));
+
+        line1.addStation(route.get(1));
+        line2.addStation(route.get(2));
+        line2.addStation(route.get(3));
+        line2.addStation(route.get(4));
+        line2.addStation(route.get(5));
+        line3.addStation(route.get(6));
+
+        Station stationFrom = stationIndex.getStation(route.get(1).getName());
+        Station stationTo = stationIndex.getStation(route.get(6).getName());
+        List<Station> actual = routeCalculator.getShortestRoute(stationFrom, stationTo);
+        List<Station> expected = List.of(route.get(1), route.get(2), route.get(3), route.get(4), route.get(5), route.get(6));
+        assertEquals(expected, actual);
+    }
 }

@@ -1,3 +1,4 @@
+import core.Line;
 import core.Station;
 
 import java.util.ArrayList;
@@ -79,31 +80,30 @@ public class RouteCalculator {
         if (from.getLine().equals(to.getLine())) {
             return null;
         }
-
         List<Station> route = new ArrayList<>();
-
+        int count = -1;
         List<Station> fromLineStations = from.getLine().getStations();
         List<Station> toLineStations = to.getLine().getStations();
-        if (toLineStations == null) {
-            return null;
-        }
         for (Station srcStation : fromLineStations) {
             for (Station dstStation : toLineStations) {
                 if (isConnected(srcStation, dstStation)) {
+                    count++;
                     ArrayList<Station> way = new ArrayList<>();
                     way.addAll(getRouteOnTheLine(from, srcStation));
                     way.addAll(getRouteOnTheLine(dstStation, to));
                     route.clear();
                     if (route.isEmpty() || route.size() > way.size()) {
-                        route.clear();
+                        //route.clear();
                         route.addAll(way);
                     }
+
                 }
 
             }
-           // return null;
-        }
-        return route;
+
+        }  if(count==1&&route.size() == (fromLineStations.size()+toLineStations.size()))
+        {return route;}
+        return null;
     }
 
     private boolean isConnected(Station station1, Station station2) {
