@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <File name="Incorrect_input" fileName="logs/input_errors.log">
+            <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <MarkerFilter marker = "INCORRECT" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+        <File name="Exception_info" fileName="logs/exceptions.log">
+            <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <MarkerFilter marker = "EXCEPTIONS" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+        <File name="Correct_input" fileName="logs/search.log">
+            <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <MarkerFilter marker = "CORRECT" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+    </appenders>
+
+    <loggers>
+        <root level="trace">
+            <appender-ref ref="Incorrect_input" level="error"/>
+            <appender-ref ref="Exception_info" level="error"/>
+            <appender-ref ref="Correct_input" level="info"/>
+
+        </root>
+    </loggers>
+</configuration>
