@@ -5,12 +5,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Main {
@@ -18,6 +21,7 @@ public class Main {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static JSONObject numberLine = new JSONObject();
     private static final String DATA_GSON = "data/metroParse.json";
+    private static List<Set<Station>> setArrayList = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
@@ -26,6 +30,7 @@ public class Main {
             Document document = Jsoup.parse(htmlFile);
             downloadDataOnHtml(document);
             readOnJsonFile(DATA_GSON);
+            System.out.println("Колличество переходов - " + setArrayList.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,6 +39,9 @@ public class Main {
     public static void writeJsonSimpleLine(String path) {
         JSONObject sampleObject = new JSONObject();
         sampleObject.put("stations", numberLine);
+        writeJsonConnected();
+        sampleObject.put("connections", setArrayList);
+
         try {
             PrintWriter writer = new PrintWriter(path);
             writer.write(GSON.toJson(sampleObject));
@@ -74,6 +82,48 @@ public class Main {
             });
         });
         writeJsonSimpleLine(DATA_GSON);
+    }
+
+    public static void writeJsonConnected() {
+        Elements stations = Jsoup.parse(parseFile("data/MetroMoscow.html"))
+                .select("div > div > div.js-metro-stations");
+        JSONObject objectConnection = new JSONObject();
+
+        stations.forEach(connect ->
+        {
+            String lineNumber = connect.attr("data-line");
+            Elements connectChilds = connect.children();
+            connectChilds.forEach(children -> {
+                if (!children.select("span.t-icon-metroln").isEmpty()) {
+                    Set<Station> setStation = new TreeSet<>();
+                    Node sizeConnectedOnChild = children.childNode(0);
+                    for (int i = 0; i < sizeConnectedOnChild.childNodeSize(); i++) {
+                        String connection = sizeConnectedOnChild.childNode(i).attr("class");
+                        if (connection.contains("t-icon-metroln")) {
+                            String nameConnect = children.text().substring(3).trim();
+                            String numberLineConnect = lineNumber;
+                            objectConnection.put("line", numberLineConnect);
+                            objectConnection.put("station", nameConnect);
+                            setStation.add(new Station(numberLineConnect, nameConnect));
+                            String newLineConnect = connection.substring(connection.length() - 2).replace("-", "");
+                            String nameNewConnectNoFormat = sizeConnectedOnChild.childNode(i).attr("title");
+                            String regexForNameConnect = "«[[А-Я]?[а-я][Ё,ё]+\\s?]+»";
+                            Pattern pattern = Pattern.compile(regexForNameConnect);
+                            Matcher matcher = pattern.matcher(nameNewConnectNoFormat);
+                            while (matcher.find()) {
+                                int start = matcher.start() + 1;
+                                int end = matcher.end() - 1;
+                                String nameNewConnect = nameNewConnectNoFormat.substring(start, end);
+                                objectConnection.put("line", newLineConnect);
+                                objectConnection.put("station", nameNewConnect);
+                                setStation.add(new Station(newLineConnect, nameNewConnect));
+                            }
+                            setArrayList.add(setStation);
+                        }
+                    }
+                }
+            });
+        });
     }
 
     public static void readOnJsonFile(String pathOnJsonFile) {
